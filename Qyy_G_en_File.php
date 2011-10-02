@@ -44,7 +44,7 @@ class Qyy_G_en_File
   // TODO: doc
   function __construct ($filename)
   {
-    if (file_exists($filename))
+    if (!file_exists($filename))
     {
       throw new Exception(
         'This file does not exist or permissions are not set correctly: '
