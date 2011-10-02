@@ -46,7 +46,7 @@ class Qyy_G_en_File
   {
     if (!file_exists($filename))
     {
-      throw new Exception(
+      throw new InvalidArgumentException(
         'This file does not exist or permissions are not set correctly: '
           .$filename,
         404);
@@ -76,7 +76,7 @@ class Qyy_G_en_File
     
     if (is_null($return) || empty($return))
     {
-      throw new Exception('This file seems to start with a dot.', 404);
+      throw new LengthException('This file seems to start with a dot.', 404);
     }
     
     return $return;
@@ -90,7 +90,7 @@ class Qyy_G_en_File
     
     if (is_null($return) || empty($return))
     {
-      throw new Exception('There is no suffix for this file.', 404);
+      throw new LengthException('There is no suffix for this file.', 404);
     }
     
     return $return;
