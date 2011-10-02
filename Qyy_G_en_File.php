@@ -118,9 +118,9 @@ class Qyy_G_en_File
           .'It might be due to a lack of permissions.',
         403  ,
         new Exception(
-          'message : "'.$derniereErreur['message'].'"'.PHP_EOL
-            .'file : "'.$derniereErreur['file'].'"'.PHP_EOL
-            .'line : '.$derniereErreur['line'].PHP_EOL,
+          'message: "'.$lastError['message'].'"'.PHP_EOL
+            .'file: "'.$lastError['file'].'"'.PHP_EOL
+            .'line: `'.$lastError['line'].'`'.PHP_EOL,
           $derniereErreur['type']));
     }
     
