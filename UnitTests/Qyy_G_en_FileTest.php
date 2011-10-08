@@ -67,15 +67,20 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   protected function setUp()
   {
+    // if it's >= 10, the instantiation of the class will throw an excpetion
     $this->filenames = array(
-      '../readme.md',
-      '../.gitignore',
-      '../README',
-      'foo.bar');
+       0 => '../readme.md',
+       1 => '../.gitignore',
+       2 => '../README',
+       3 => '../temp/overwrite.tmp',
+      10 => 'foo.bar',
+      11 => '../temp/test.tmp',
+      12 => '../temp/foo/test.tmp');
     
     $this->testNewObject0();
     $this->testNewObject1();
     $this->testNewObject2();
+    $this->testNewObject3();
   }
 
 //  /**
@@ -107,22 +112,58 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(true, is_a($this->object2, 'Qyy_G_en_File'));
   }
   
+  public function testNewObject3 ()
+  {
+    $data = time();
+    
+    $this->object3 =
+      new Qyy_G_en_File(
+        $this->filenames[3],
+        $data,
+        true);
+    
+    $this->assertEquals(true, is_a($this->object2, 'Qyy_G_en_File'));
+    
+    // TODO: GetContent and test it
+  }
+  
   /**
    * @expectedException InvalidArgumentException
    */
-  public function testNewObject3 ()
+  public function testNewObject10 ()
   {
-    new Qyy_G_en_File($this->filenames[3]);
+    new Qyy_G_en_File($this->filenames[10]);
+  }
+  
+  /**
+   * @expectedException OverflowException
+   */
+  public function testNewObject11 ()
+  {
+    new Qyy_G_en_File(
+      $this->filenames[11],
+      'testNewObject11');
+  }
+  
+  /**
+   * @expectedException Exception
+   */
+  public function testNewObject12 ()
+  {
+    new Qyy_G_en_File(
+      $this->filenames[12],
+      'testNewObject12');
   }
   
   /**
    * @depends testNewObject0
    * @depends testNewObject1
    * @depends testNewObject2
+   * @depends testNewObject3
    */
   public function testGetFilename()
   {
-    for($i = 0; $i <= 2; $i++)
+    for($i = 0; $i <= 3; $i++)
     {
       $this->assertEquals(
         $this->filenames[$i],
@@ -131,13 +172,14 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject0
-   * @depends testNewObject1
-   * @depends testNewObject2
+    * @depends testNewObject0
+    * @depends testNewObject1
+    * @depends testNewObject2
+    * @depends testNewObject3
    */
   public function testGetBasename()
   {
-    for($i = 0; $i <= 2; $i++)
+    for($i = 0; $i <= 3; $i++)
     {
       $this->assertEquals(
         basename($this->filenames[$i]),
@@ -171,6 +213,14 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @depends testNewObject3
+   */
+  public function testGetBasenameNoSuffix3 ()
+  {
+    $this->assertEquals('overwrite', $this->object3->GetBasenameNoSuffix());
+  }
+
+  /**
    * @depends testNewObject0
    */
   public function testGetSuffix0 ()
@@ -194,15 +244,24 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   {
     $this->object2->GetSuffix();
   }
+  
+  /**
+   * @depends testNewObject3
+   */
+  public function testGetSuffix3 ()
+  {
+    $this->assertEquals('tmp', $this->object3->GetSuffix());
+  }
 
   /**
    * @depends testNewObject0
    * @depends testNewObject1
    * @depends testNewObject2
+   * @depends testNewObject3
    */
   public function testGetDirname ()
   {
-    for($i = 0; $i <= 2; $i++)
+    for($i = 0; $i <= 3; $i++)
     {
       $this->assertEquals(
         dirname($this->filenames[$i]),
@@ -214,10 +273,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    * @depends testNewObject0
    * @depends testNewObject1
    * @depends testNewObject2
+   * @depends testNewObject3
    */
   public function testGetRealpath ()
   {
-    for($i = 0; $i <= 2; $i++)
+    for($i = 0; $i <= 3; $i++)
     {
       $this->assertEquals(
         realpath($this->filenames[$i]),
