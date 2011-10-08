@@ -58,6 +58,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   protected $object2;
   
   /**
+   * @var Qyy_G_en_File
+   */
+  protected $object3;
+  
+  /**
    * @var array
    */
   protected $filenames;
@@ -127,7 +132,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
         $this->data,
         true);
     
-    $this->assertEquals(true, is_a($this->object2, 'Qyy_G_en_File'));
+    $this->assertEquals(true, is_a($this->object3, 'Qyy_G_en_File'));
   }
   
   // TODO: tests for creation of innexistant files
