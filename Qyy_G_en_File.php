@@ -44,7 +44,6 @@ class Qyy_G_en_File
    */
   protected $filename;
   
-  // TODO: tests création
   // TODO: doc
   // http://php.net/manual/en/function.file-put-contents.php
   function __construct (
@@ -169,6 +168,52 @@ class Qyy_G_en_File
           $derniereErreur['type']));
     }
     
+    return $return;
+  }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.file-get-contents.php
+  public function GetContents (
+    $use_include_path = false,
+    $context = null,
+    $offset = -1,
+    $maxlen = null)
+  {
+    if (is_null($maxlen))
+    {
+      $return =
+        file_get_contents(
+          $this->GetFilename(),
+          $use_include_path,
+          $context,
+          $offset);
+    }
+    else
+    {
+      $return =
+        file_get_contents(
+          $this->GetFilename(),
+          $use_include_path,
+          $context,
+          $offset,
+          $maxlen);
+    }
+
+    if ($return === false)
+    {
+      $lastError = error_get_last();
+
+      throw new Exception(
+        'Unable to retrieve the content of the file. See last php error or '
+          .'previous exception of this one for more informations.',
+        500,
+        new Exception(
+          'message: "'.$lastError['message'].'"'.PHP_EOL
+            .'file: "'.$lastError['file'].'"'.PHP_EOL
+            .'line: `'.$lastError['line'].'`'.PHP_EOL,
+          $derniereErreur['type']));
+    }
+
     return $return;
   }
 }
