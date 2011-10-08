@@ -95,13 +95,16 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->testNewObject3();
   }
 
-//  /**
-//   * Tears down the fixture.
-//   */
-//  protected function tearDown ()
-//  {
-//    
-//  }
+ /**
+  * Tears down the fixture.
+  */
+ protected function tearDown ()
+ {
+   // I reset the content of this file with its value when commited for the
+   // first time. So I don't have to see it in the list of modified files to
+   // commit.
+   file_put_contents($this->filenames[3], '1318067799');
+ }
   
   public function testNewObject0 ()
   {
