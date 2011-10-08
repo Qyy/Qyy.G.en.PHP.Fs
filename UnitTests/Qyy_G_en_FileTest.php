@@ -63,6 +63,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   protected $object3;
   
   /**
+   * @var Qyy_G_en_File
+   */
+  protected $object4;
+  
+  /**
    * @var array
    */
   protected $filenames;
@@ -83,9 +88,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
        1 => '../.gitignore',
        2 => '../README',
        3 => '../temp/overwrite.tmp',
+       4 => '../temp/new.tmp',
       10 => 'foo.bar',
       11 => '../temp/test.tmp',
-      12 => '../temp/foo/test.tmp');
+      12 => '../temp/foo/new.tmp');
     
     $this->data = strval(time());
     
@@ -93,6 +99,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->testNewObject1();
     $this->testNewObject2();
     $this->testNewObject3();
+    $this->testNewObject4();
   }
 
  /**
@@ -104,8 +111,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    // first time. So I don't have to see it in the list of modified files to
    // commit.
    file_put_contents($this->filenames[3], '1318067799');
+   
+   unlink($this->filenames[4]);
  }
-  
+
   public function testNewObject0 ()
   {
     $this->object0 = new Qyy_G_en_File($this->filenames[0]);
@@ -138,8 +147,17 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(true, is_a($this->object3, 'Qyy_G_en_File'));
   }
   
-  // TODO: tests for creation of innexistant files
-  
+  public function testNewObject4 ()
+  { 
+    $this->object4 =
+      new Qyy_G_en_File(
+        $this->filenames[4],
+        $this->data,
+        true);
+    
+    $this->assertEquals(true, is_a($this->object4, 'Qyy_G_en_File'));
+  }
+
   /**
    * @expectedException InvalidArgumentException
    */
@@ -173,10 +191,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    * @depends testNewObject1
    * @depends testNewObject2
    * @depends testNewObject3
+   * @depends testNewObject4
    */
   public function testGetFilename()
   {
-    for($i = 0; $i <= 3; $i++)
+    for($i = 0; $i <= 4; $i++)
     {
       $this->assertEquals(
         $this->filenames[$i],
@@ -185,14 +204,15 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-    * @depends testNewObject0
-    * @depends testNewObject1
-    * @depends testNewObject2
-    * @depends testNewObject3
+   * @depends testNewObject0
+   * @depends testNewObject1
+   * @depends testNewObject2
+   * @depends testNewObject3
+   * @depends testNewObject4
    */
   public function testGetBasename()
   {
-    for($i = 0; $i <= 3; $i++)
+    for($i = 0; $i <= 4; $i++)
     {
       $this->assertEquals(
         basename($this->filenames[$i]),
@@ -232,6 +252,14 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   {
     $this->assertEquals('overwrite', $this->object3->GetBasenameNoSuffix());
   }
+  
+  /**
+   * @depends testNewObject4
+   */
+  public function testGetBasenameNoSuffix4 ()
+  {
+    $this->assertEquals('new', $this->object4->GetBasenameNoSuffix());
+  }
 
   /**
    * @depends testNewObject0
@@ -267,14 +295,23 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @depends testNewObject4
+   */
+  public function testGetSuffix4 ()
+  {
+    $this->assertEquals('tmp', $this->object4->GetSuffix());
+  }
+
+  /**
    * @depends testNewObject0
    * @depends testNewObject1
    * @depends testNewObject2
    * @depends testNewObject3
+   * @depends testNewObject4
    */
   public function testGetDirname ()
   {
-    for($i = 0; $i <= 3; $i++)
+    for($i = 0; $i <= 4; $i++)
     {
       $this->assertEquals(
         dirname($this->filenames[$i]),
@@ -287,10 +324,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    * @depends testNewObject1
    * @depends testNewObject2
    * @depends testNewObject3
+   * @depends testNewObject4
    */
   public function testGetRealpath ()
   {
-    for($i = 0; $i <= 3; $i++)
+    for($i = 0; $i <= 4; $i++)
     {
       $this->assertEquals(
         realpath($this->filenames[$i]),
@@ -303,10 +341,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    * @depends testNewObject1
    * @depends testNewObject2
    * @depends testNewObject3
+   * @depends testNewObject4
    */
   public function testGetContents ()
   {
-    for($i = 0; $i <= 3; $i++)
+    for($i = 0; $i <= 4; $i++)
     {
       $this->assertEquals(
         file_get_contents($this->filenames[$i]),
@@ -320,5 +359,13 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   public function testGetContents3 ()
   {
     $this->assertEquals($this->data, $this->object3->GetContents());
+  }
+  
+  /**
+   * @depends testNewObject4
+   */
+  public function testGetContents4 ()
+  {
+    $this->assertEquals($this->data, $this->object4->GetContents());
   }
 }
