@@ -63,6 +63,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   protected $filenames;
   
   /**
+   * @var string
+   */
+  protected $data;
+  
+  /**
    * Sets up the fixture.
    */
   protected function setUp()
@@ -76,6 +81,8 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
       10 => 'foo.bar',
       11 => '../temp/test.tmp',
       12 => '../temp/foo/test.tmp');
+    
+    $this->data = strval(time());
     
     $this->testNewObject0();
     $this->testNewObject1();
@@ -113,19 +120,17 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   public function testNewObject3 ()
-  {
-    $data = time();
-    
+  { 
     $this->object3 =
       new Qyy_G_en_File(
         $this->filenames[3],
-        $data,
+        $this->data,
         true);
     
     $this->assertEquals(true, is_a($this->object2, 'Qyy_G_en_File'));
-    
-    // TODO: GetContent and test it
   }
+  
+  // TODO: tests for creation of innexistant files
   
   /**
    * @expectedException InvalidArgumentException
@@ -283,5 +288,29 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
         realpath($this->filenames[$i]),
         $this->{'object'.$i}->GetRealpath());
     }
+  }
+  
+  /**
+   * @depends testNewObject0
+   * @depends testNewObject1
+   * @depends testNewObject2
+   * @depends testNewObject3
+   */
+  public function testGetContents ()
+  {
+    for($i = 0; $i <= 3; $i++)
+    {
+      $this->assertEquals(
+        file_get_contents($this->filenames[$i]),
+        $this->{'object'.$i}->GetContents());
+    }
+  }
+  
+  /**
+   * @depends testNewObject3
+   */
+  public function testGetContents3 ()
+  {
+    $this->assertEquals($this->data, $this->object3->GetContents());
   }
 }
