@@ -34,7 +34,7 @@
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
 
-require_once dirname(__FILE__) . '/../Qyy_G_en_File.php';
+require_once dirname(__FILE__) . '/../Qyy_G_en_File.class.php';
 
 /**
  * Test class for Qyy_G_en_File.
