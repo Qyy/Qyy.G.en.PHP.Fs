@@ -124,30 +124,15 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    unlink($this->filenames[4]);
  }
 
-  public function testNewObject0 ()
-  {
-    $this->assertEquals(true, is_a($this->object0, 'Qyy_G_en_File'));
-  }
-  
-  public function testNewObject1 ()
-  {
-    $this->assertEquals(true, is_a($this->object1, 'Qyy_G_en_File'));
-  }
-
-  public function testNewObject2 ()
-  {
-    $this->assertEquals(true, is_a($this->object2, 'Qyy_G_en_File'));
-  }
-  
-  public function testNewObject3 ()
-  {
-    $this->assertEquals(true, is_a($this->object3, 'Qyy_G_en_File'));
-  }
-  
-  public function testNewObject4 ()
-  {
-    $this->assertEquals(true, is_a($this->object4, 'Qyy_G_en_File'));
-  }
+ public function testNewObject ()
+ {
+   for($i = 0; $i <= 4; $i++)
+   {
+     $this->assertEquals(
+       true,
+       is_a($this->{'object'.$i}, 'Qyy_G_en_File'));
+   }
+ }
 
   /**
    * @expectedException InvalidArgumentException
@@ -178,11 +163,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject0
-   * @depends testNewObject1
-   * @depends testNewObject2
-   * @depends testNewObject3
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetFilename()
   {
@@ -195,11 +176,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject0
-   * @depends testNewObject1
-   * @depends testNewObject2
-   * @depends testNewObject3
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetBasename()
   {
@@ -212,7 +189,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject0
+   * @depends testNewObject
    */
   public function testGetBasenameNoSuffix0 ()
   {
@@ -220,7 +197,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-  * @depends testNewObject1
+  * @depends testNewObject
   * @expectedException LengthException
   */
   public function testGetBasenameNoSuffix1 ()
@@ -229,7 +206,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject2
+   * @depends testNewObject
    */
   public function testGetBasenameNoSuffix2 ()
   {
@@ -237,7 +214,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject3
+   * @depends testNewObject
    */
   public function testGetBasenameNoSuffix3 ()
   {
@@ -245,7 +222,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetBasenameNoSuffix4 ()
   {
@@ -253,7 +230,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject0
+   * @depends testNewObject
    */
   public function testGetSuffix0 ()
   {
@@ -261,7 +238,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject1
+   * @depends testNewObject
    */
   public function testGetSuffix1 ()
   {
@@ -269,7 +246,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject2
+   * @depends testNewObject
    * @expectedException LengthException
    */
   public function testGetSuffix2 ()
@@ -278,7 +255,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject3
+   * @depends testNewObject
    */
   public function testGetSuffix3 ()
   {
@@ -286,7 +263,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetSuffix4 ()
   {
@@ -294,11 +271,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject0
-   * @depends testNewObject1
-   * @depends testNewObject2
-   * @depends testNewObject3
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetDirname ()
   {
@@ -311,11 +284,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends testNewObject0
-   * @depends testNewObject1
-   * @depends testNewObject2
-   * @depends testNewObject3
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetRealpath ()
   {
@@ -328,11 +297,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject0
-   * @depends testNewObject1
-   * @depends testNewObject2
-   * @depends testNewObject3
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetContents ()
   {
@@ -345,7 +310,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject3
+   * @depends testNewObject
    */
   public function testGetContents3 ()
   {
@@ -353,7 +318,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @depends testNewObject4
+   * @depends testNewObject
    */
   public function testGetContents4 ()
   {
