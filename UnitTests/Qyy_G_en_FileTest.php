@@ -43,35 +43,20 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
 {
 
   /**
-   * @var Qyy_G_en_File
+   * @var array
    */
-  protected $object0;
-
-  /**
-   * @var Qyy_G_en_File
-   */
-  protected $object1;
-  
-  /**
-   * @var Qyy_G_en_File
-   */
-  protected $object2;
-  
-  /**
-   * @var Qyy_G_en_File
-   */
-  protected $object3;
-  
-  /**
-   * @var Qyy_G_en_File
-   */
-  protected $object4;
+  protected $objects;
   
   /**
    * @var array
    */
   protected $filenames;
-  
+
+  /**
+   * @var array
+   */
+  protected $fakeFilenames;
+
   /**
    * @var string
    */
@@ -82,30 +67,31 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   protected function setUp()
   {
-    // if it's >= 10, the instantiation of the class will throw an excpetion
     $this->filenames = array(
-       0 => '../readme.md',
-       1 => '../.gitignore',
-       2 => '../README',
-       3 => '../temp/overwrite.tmp',
-       4 => '../temp/new.tmp',
-      10 => 'foo.bar',
-      11 => '../temp/test.tmp',
-      12 => '../temp/foo/new.tmp');
+      0 => '../readme.md',
+      1 => '../.gitignore',
+      2 => '../README',
+      3 => '../temp/overwrite.tmp',
+      4 => '../temp/new.tmp');
+    
+    $this->fakeFilenames = array(
+      0 => 'foo.bar',
+      1 => '../temp/test.tmp',
+      2 => '../temp/foo/new.tmp');
     
     $this->data = strval(time());
     
-    $this->object0 = new Qyy_G_en_File($this->filenames[0]);
-    $this->object1 = new Qyy_G_en_File($this->filenames[1]);
-    $this->object2 = new Qyy_G_en_File($this->filenames[2]);
+    $this->objects[0] = new Qyy_G_en_File($this->filenames[0]);
+    $this->objects[1] = new Qyy_G_en_File($this->filenames[1]);
+    $this->objects[2] = new Qyy_G_en_File($this->filenames[2]);
     
-    $this->object3 =
+    $this->objects[3] =
       new Qyy_G_en_File(
         $this->filenames[3],
         $this->data,
         true);
     
-    $this->object4 =
+    $this->objects[4] =
       new Qyy_G_en_File(
         $this->filenames[4],
         $this->data);
@@ -126,40 +112,43 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
 
  public function testNewObject ()
  {
-   for($i = 0; $i <= 4; $i++)
+   foreach($this->objects as $object)
    {
      $this->assertEquals(
        true,
-       is_a($this->{'object'.$i}, 'Qyy_G_en_File'));
+       is_a($object, 'Qyy_G_en_File'));
    }
  }
 
   /**
+   * Nonexistent file.
    * @expectedException InvalidArgumentException
    */
-  public function testNewObject10 ()
+  public function testNewFakeObject0 ()
   {
-    new Qyy_G_en_File($this->filenames[10]);
+    new Qyy_G_en_File($this->fakeFilenames[0]);
   }
   
   /**
+   * Existing file, but overwriting parameter set to default (`false`).
    * @expectedException OverflowException
    */
-  public function testNewObject11 ()
+  public function testNewFakeObject1 ()
   {
     new Qyy_G_en_File(
-      $this->filenames[11],
-      'testNewObject11');
+      $this->fakeFilenames[1],
+      'testNewObject1');
   }
   
   /**
+   * Unable to create the file.
    * @expectedException Exception
    */
-  public function testNewObject12 ()
+  public function testNewFakeObject2 ()
   {
     new Qyy_G_en_File(
-      $this->filenames[12],
-      'testNewObject12');
+      $this->fakeFilenames[2],
+      'testNewObject2');
   }
   
   /**
@@ -167,11 +156,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetFilename()
   {
-    for($i = 0; $i <= 4; $i++)
+    foreach($this->filenames as $i => $filename)
     {
       $this->assertEquals(
-        $this->filenames[$i],
-        $this->{'object'.$i}->GetFilename());
+        $filename,
+        $this->objects[$i]->GetFilename());
     }
   }
 
@@ -180,11 +169,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBasename()
   {
-    for($i = 0; $i <= 4; $i++)
+    foreach($this->filenames as $i => $filename)
     {
       $this->assertEquals(
-        basename($this->filenames[$i]),
-        $this->{'object'.$i}->GetBasename());
+        basename($filename),
+        $this->objects[$i]->GetBasename());
     }
   }
 
@@ -193,7 +182,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBasenameNoSuffix0 ()
   {
-    $this->assertEquals('readme', $this->object0->GetBasenameNoSuffix());
+    $this->assertEquals('readme', $this->objects[0]->GetBasenameNoSuffix());
   }
   
   /**
@@ -202,7 +191,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   */
   public function testGetBasenameNoSuffix1 ()
   {
-    $this->object1->GetBasenameNoSuffix();
+    $this->objects[1]->GetBasenameNoSuffix();
   }
   
   /**
@@ -210,7 +199,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBasenameNoSuffix2 ()
   {
-    $this->assertEquals('README', $this->object2->GetBasenameNoSuffix());
+    $this->assertEquals('README', $this->objects[2]->GetBasenameNoSuffix());
   }
 
   /**
@@ -218,7 +207,9 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBasenameNoSuffix3 ()
   {
-    $this->assertEquals('overwrite', $this->object3->GetBasenameNoSuffix());
+    $this->assertEquals(
+      'overwrite',
+      $this->objects[3]->GetBasenameNoSuffix());
   }
   
   /**
@@ -226,7 +217,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBasenameNoSuffix4 ()
   {
-    $this->assertEquals('new', $this->object4->GetBasenameNoSuffix());
+    $this->assertEquals('new', $this->objects[4]->GetBasenameNoSuffix());
   }
 
   /**
@@ -234,7 +225,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetSuffix0 ()
   {
-    $this->assertEquals('md', $this->object0->GetSuffix());
+    $this->assertEquals('md', $this->objects[0]->GetSuffix());
   }
   
   /**
@@ -242,7 +233,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetSuffix1 ()
   {
-    $this->assertEquals('gitignore', $this->object1->GetSuffix());
+    $this->assertEquals('gitignore', $this->objects[1]->GetSuffix());
   }
   
   /**
@@ -251,7 +242,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetSuffix2 ()
   {
-    $this->object2->GetSuffix();
+    $this->objects[2]->GetSuffix();
   }
   
   /**
@@ -259,7 +250,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetSuffix3 ()
   {
-    $this->assertEquals('tmp', $this->object3->GetSuffix());
+    $this->assertEquals('tmp', $this->objects[3]->GetSuffix());
   }
 
   /**
@@ -267,7 +258,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetSuffix4 ()
   {
-    $this->assertEquals('tmp', $this->object4->GetSuffix());
+    $this->assertEquals('tmp', $this->objects[4]->GetSuffix());
   }
 
   /**
@@ -275,11 +266,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetDirname ()
   {
-    for($i = 0; $i <= 4; $i++)
+    foreach($this->filenames as $i => $filename)
     {
       $this->assertEquals(
-        dirname($this->filenames[$i]),
-        $this->{'object'.$i}->GetDirname());
+        dirname($filename),
+        $this->objects[$i]->GetDirname());
     }
   }
 
@@ -288,11 +279,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetRealpath ()
   {
-    for($i = 0; $i <= 4; $i++)
+    foreach($this->filenames as $i => $filename)
     {
       $this->assertEquals(
-        realpath($this->filenames[$i]),
-        $this->{'object'.$i}->GetRealpath());
+        realpath($filename),
+        $this->objects[$i]->GetRealpath());
     }
   }
   
@@ -301,11 +292,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetContents ()
   {
-    for($i = 0; $i <= 4; $i++)
+    foreach($this->filenames as $i => $filename)
     {
       $this->assertEquals(
-        file_get_contents($this->filenames[$i]),
-        $this->{'object'.$i}->GetContents());
+        file_get_contents($filename),
+        $this->objects[$i]->GetContents());
     }
   }
   
@@ -314,7 +305,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetContents3 ()
   {
-    $this->assertEquals($this->data, $this->object3->GetContents());
+    $this->assertEquals($this->data, $this->objects[3]->GetContents());
   }
   
   /**
@@ -322,6 +313,6 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetContents4 ()
   {
-    $this->assertEquals($this->data, $this->object4->GetContents());
+    $this->assertEquals($this->data, $this->objects[4]->GetContents());
   }
 }
