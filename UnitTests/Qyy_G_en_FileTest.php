@@ -95,11 +95,20 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     
     $this->data = strval(time());
     
-    $this->testNewObject0();
-    $this->testNewObject1();
-    $this->testNewObject2();
-    $this->testNewObject3();
-    $this->testNewObject4();
+    $this->object0 = new Qyy_G_en_File($this->filenames[0]);
+    $this->object1 = new Qyy_G_en_File($this->filenames[1]);
+    $this->object2 = new Qyy_G_en_File($this->filenames[2]);
+    
+    $this->object3 =
+      new Qyy_G_en_File(
+        $this->filenames[3],
+        $this->data,
+        true);
+    
+    $this->object4 =
+      new Qyy_G_en_File(
+        $this->filenames[4],
+        $this->data);
   }
 
  /**
@@ -117,44 +126,26 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
 
   public function testNewObject0 ()
   {
-    $this->object0 = new Qyy_G_en_File($this->filenames[0]);
-    
     $this->assertEquals(true, is_a($this->object0, 'Qyy_G_en_File'));
   }
   
   public function testNewObject1 ()
   {
-    $this->object1 = new Qyy_G_en_File($this->filenames[1]);
-    
     $this->assertEquals(true, is_a($this->object1, 'Qyy_G_en_File'));
   }
 
   public function testNewObject2 ()
   {
-    $this->object2 = new Qyy_G_en_File($this->filenames[2]);
-    
     $this->assertEquals(true, is_a($this->object2, 'Qyy_G_en_File'));
   }
   
   public function testNewObject3 ()
-  { 
-    $this->object3 =
-      new Qyy_G_en_File(
-        $this->filenames[3],
-        $this->data,
-        true);
-    
+  {
     $this->assertEquals(true, is_a($this->object3, 'Qyy_G_en_File'));
   }
   
   public function testNewObject4 ()
-  { 
-    $this->object4 =
-      new Qyy_G_en_File(
-        $this->filenames[4],
-        $this->data,
-        true);
-    
+  {
     $this->assertEquals(true, is_a($this->object4, 'Qyy_G_en_File'));
   }
 
