@@ -25,3 +25,7 @@ nb-configuration.xml
 tests
 tests.*
 tests/
+
+work
+work.*
+work/
