@@ -43,21 +43,6 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
 {
 
   /**
-   * @var array
-   */
-  protected $objects;
-  
-  /**
-   * @var array
-   */
-  protected $filenames;
-
-  /**
-   * @var array
-   */
-  protected $fakeFilenames;
-
-  /**
    * @var string
    */
   protected $data;
@@ -67,33 +52,33 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   protected function setUp()
   {
-    $this->filenames = array(
+    $this->names = array(
       0 => '../readme.md',
       1 => '../.gitignore',
       2 => '../README',
       3 => '../temp/overwrite.tmp',
       4 => '../temp/new.tmp');
     
-    $this->fakeFilenames = array(
+    $this->fakeNames = array(
       0 => 'foo.bar',
       1 => '../temp/test.tmp',
       2 => '../temp/foo/new.tmp');
     
     $this->data = strval(time());
     
-    $this->objects[0] = new Qyy_G_en_File($this->filenames[0]);
-    $this->objects[1] = new Qyy_G_en_File($this->filenames[1]);
-    $this->objects[2] = new Qyy_G_en_File($this->filenames[2]);
+    $this->objects[0] = new Qyy_G_en_File($this->names[0]);
+    $this->objects[1] = new Qyy_G_en_File($this->names[1]);
+    $this->objects[2] = new Qyy_G_en_File($this->names[2]);
     
     $this->objects[3] =
       new Qyy_G_en_File(
-        $this->filenames[3],
+        $this->names[3],
         $this->data,
         true);
     
     $this->objects[4] =
       new Qyy_G_en_File(
-        $this->filenames[4],
+        $this->names[4],
         $this->data);
   }
 
@@ -105,9 +90,9 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    // I reset the content of this file with its value when commited for the
    // first time. So I don't have to see it in the list of modified files to
    // commit.
-   file_put_contents($this->filenames[3], '1318067799');
+   file_put_contents($this->names[3], '1318067799');
    
-   unlink($this->filenames[4]);
+   unlink($this->names[4]);
  }
 
  public function testNewObject ()
@@ -126,7 +111,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testNewFakeObject0 ()
   {
-    new Qyy_G_en_File($this->fakeFilenames[0]);
+    new Qyy_G_en_File($this->fakeNames[0]);
   }
   
   /**
@@ -136,7 +121,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   public function testNewFakeObject1 ()
   {
     new Qyy_G_en_File(
-      $this->fakeFilenames[1],
+      $this->fakeNames[1],
       'testNewObject1');
   }
   
@@ -147,34 +132,8 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   public function testNewFakeObject2 ()
   {
     new Qyy_G_en_File(
-      $this->fakeFilenames[2],
+      $this->fakeNames[2],
       'testNewObject2');
-  }
-  
-  /**
-   * @depends testNewObject
-   */
-  public function testGetFilename()
-  {
-    foreach($this->filenames as $i => $filename)
-    {
-      $this->assertEquals(
-        $filename,
-        $this->objects[$i]->GetFilename());
-    }
-  }
-
-  /**
-   * @depends testNewObject
-   */
-  public function testGetBasename()
-  {
-    foreach($this->filenames as $i => $filename)
-    {
-      $this->assertEquals(
-        basename($filename),
-        $this->objects[$i]->GetBasename());
-    }
   }
 
   /**
@@ -266,10 +225,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetDirname ()
   {
-    foreach($this->filenames as $i => $filename)
+    foreach($this->names as $i => $name)
     {
       $this->assertEquals(
-        dirname($filename),
+        dirname($name),
         $this->objects[$i]->GetDirname());
     }
   }
@@ -279,10 +238,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetRealpath ()
   {
-    foreach($this->filenames as $i => $filename)
+    foreach($this->names as $i => $name)
     {
       $this->assertEquals(
-        realpath($filename),
+        realpath($name),
         $this->objects[$i]->GetRealpath());
     }
   }
@@ -292,10 +251,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    */
   public function testGetContents ()
   {
-    foreach($this->filenames as $i => $filename)
+    foreach($this->names as $i => $name)
     {
       $this->assertEquals(
-        file_get_contents($filename),
+        file_get_contents($name),
         $this->objects[$i]->GetContents());
     }
   }
