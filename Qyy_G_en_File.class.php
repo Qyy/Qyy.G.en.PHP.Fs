@@ -34,48 +34,59 @@
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
 
-//DIRECTORY_SEPARATOR
+if (!defined('QYYG_FILE_PATH'))
+{
+  if (
+    (defined('__DIR__') && __DIR__ != dirname(__FILE__))
+    || !defined('__DIR__'))
+  {
+    define('QYYG_FILE_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+  }
+  else
+  {
+    define('QYYG_FILE_PATH', __DIR__.DIRECTORY_SEPARATOR);
+  }
+}
+
+require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystemNode.class.php');
 
 // TODO: doc
-class Qyy_G_en_File
+class Qyy_G_en_File extends Qyy_G_en_FileSystemNode
 {
-  /**
-   * @var string
-   */
-  protected $filename;
   
   // TODO: doc
   // http://php.net/manual/en/function.file-put-contents.php
   function __construct (
-    $filename,
+    $name,
     $data      = false,
     $overwrite = false,
     $flags     = 0,
     $context   = null)
   {
-    if ($data === false && !file_exists($filename))
+    
+    if ($data === false && !file_exists($name))
     {
       throw new InvalidArgumentException(
         'This file does not exist or permissions are not set correctly: '
           .PHP_EOL
-          .'"'.$filename.'"',
+          .'"'.$name.'"',
         404);
     }
     else if ($data !== false
           && $overwrite === false
-          && file_exists($filename))
+          && file_exists($name))
     {
       throw new OverflowException(
         'This file already exist and overwrite is set to false: '
           .PHP_EOL
-          .'"'.$filename.'"',
+          .'"'.$name.'"',
         423);
     }
     else if ($data !== false)
     {
       $success = 
         file_put_contents(
-          $filename,
+          $name,
           $data,
           $flags,
           $context);
@@ -96,27 +107,14 @@ class Qyy_G_en_File
       }
     }
     
-    $this->filename = $filename;
+    $this->name = $name;
   }
-  
-  // TODO: doc
-  public function GetFilename ()
-  {
-    return $this->filename;
-  }
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.basename.php
-  public function GetBasename ()
-  {
-    return basename($this->GetFilename());
-  }
-  
+
   // TODO: doc
   // http://php.net/manual/en/function.pathinfo.php
   public function GetBasenameNoSuffix ()
   {
-    $return = pathinfo($this->GetFilename(), PATHINFO_FILENAME);
+    $return = pathinfo($this->GetName(), PATHINFO_FILENAME);
     
     if (is_null($return) || empty($return))
     {
@@ -130,7 +128,7 @@ class Qyy_G_en_File
   // http://php.net/manual/en/function.pathinfo.php
   public function GetSuffix ()
   {
-    $return = pathinfo($this->GetFilename(), PATHINFO_EXTENSION);
+    $return = pathinfo($this->GetName(), PATHINFO_EXTENSION);
     
     if (is_null($return) || empty($return))
     {
@@ -139,38 +137,7 @@ class Qyy_G_en_File
     
     return $return;
   }
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.dirname.php
-  public function GetDirname ()
-  {
-    return dirname($this->GetFilename());
-  }
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.realpath.php
-  public function GetRealpath ()
-  {
-    $return = realpath($this->GetFilename());
-    
-    if ($return === false)
-    {
-      $lastError = error_get_last();
-      
-      throw new Exception(
-        'Unable to determine the real path. '
-          .'It might be due to a lack of permissions.',
-        403,
-        new Exception(
-          'message: "'.$lastError['message'].'"'.PHP_EOL
-            .'file: "'.$lastError['file'].'"'.PHP_EOL
-            .'line: `'.$lastError['line'].'`'.PHP_EOL,
-          $derniereErreur['type']));
-    }
-    
-    return $return;
-  }
-  
+
   // TODO: doc
   // http://php.net/manual/en/function.file-get-contents.php
   public function GetContents (
@@ -183,7 +150,7 @@ class Qyy_G_en_File
     {
       $return =
         file_get_contents(
-          $this->GetFilename(),
+          $this->GetName(),
           $use_include_path,
           $context,
           $offset);
@@ -192,7 +159,7 @@ class Qyy_G_en_File
     {
       $return =
         file_get_contents(
-          $this->GetFilename(),
+          $this->GetName(),
           $use_include_path,
           $context,
           $offset,
