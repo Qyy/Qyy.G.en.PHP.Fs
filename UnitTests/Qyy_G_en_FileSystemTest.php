@@ -133,7 +133,50 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
       Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
     }
   }
+  
+  public function testThrowExceptionIfNotFileFilesNames ()
+  {
+    foreach($this->filesNames as $name)
+    {
+      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+    }
+  }
+  
+  /**
+   * It's a directory.
+   * @expectedException InvalidArgumentException
+   */
+  public function testThrowExceptionIfNotFileDirectoriesNames ()
+  {
+    foreach($this->directoriesNames as $name)
+    {
+      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+    }
+  }
+  
+  /**
+   * Nonexistent files.
+   * @expectedException InvalidArgumentException
+   */
+  public function testThrowExceptionIfNotFileFakeFilesNames ()
+  {
+    foreach($this->fakeFilesNames as $name)
+    {
+      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+    }
+  }
 
+  /**
+   * Nonexistent directories.
+   * @expectedException InvalidArgumentException
+   */
+  public function testThrowExceptionIfNotFileFakeDirectoriesNames ()
+  {
+    foreach($this->fakeDirectoriesNames as $name)
+    {
+      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+    }
+  }
 }
 
 ?>
