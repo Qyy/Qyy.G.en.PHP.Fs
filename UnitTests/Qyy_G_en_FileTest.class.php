@@ -49,6 +49,21 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   protected $data;
   
   /**
+   * @var array
+   */
+  protected $names;
+
+  /**
+   * @var array
+   */
+  protected $fakeNames;
+
+  /**
+   * @var array
+   */
+  protected $directoriesNames;
+
+  /**
    * Sets up the fixture.
    */
   protected function setUp()
@@ -64,6 +79,12 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
       0 => 'foo.bar',
       1 => '../temp/test.tmp',
       2 => '../temp/foo/new.tmp');
+      
+    $this->directoriesNames = array(
+      0 => './',
+      1 => '../',
+      2 => '../temp/',
+      3 => '../temp');
     
     $this->data = strval(time());
     
@@ -83,28 +104,40 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
         $this->data);
   }
 
- /**
-  * Tears down the fixture.
-  */
- protected function tearDown ()
- {
-   // I reset the content of this file with its value when commited for the
-   // first time. So I don't have to see it in the list of modified files to
-   // commit.
-   file_put_contents($this->names[3], '1318067799');
+  /**
+   * Tears down the fixture.
+   */
+  protected function tearDown ()
+  {
+    // I reset the content of this file with its value when commited for the
+    // first time. So I don't have to see it in the list of modified files to
+    // commit.
+    file_put_contents($this->names[3], '1318067799');
    
-   unlink($this->names[4]);
- }
+    unlink($this->names[4]);
+  }
 
- public function testNewObject ()
- {
-   foreach($this->objects as $object)
-   {
-     $this->assertEquals(
-       true,
-       is_a($object, 'Qyy_G_en_File'));
-   }
- }
+  public function testNewObject ()
+  {
+    foreach($this->objects as $object)
+    {
+      $this->assertEquals(
+        true,
+        is_a($object, 'Qyy_G_en_File'));
+    }
+  }
+ 
+  /**
+   * This is a directory.
+   * @expectedException InvalidArgumentException
+   */
+  public function testDirectoriesNames ()
+  {
+    foreach($this->directoriesNames as $name)
+    {
+      new Qyy_G_en_File($name);
+    }
+  }
 
   /**
    * Nonexistent file.
