@@ -77,4 +77,18 @@ class Qyy_G_en_FileSystem
         404);
     }
   }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.is-file.php
+  public static function ThrowExceptionIfNotFile ($name)
+  {
+    if (!is_file($name))
+    {
+      throw new InvalidArgumentException(
+        'This node does not seems to be a file: '
+          .PHP_EOL
+          .'"'.$name.'"',
+        400);
+    }
+  }
 }
