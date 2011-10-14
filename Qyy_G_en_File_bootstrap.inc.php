@@ -34,5 +34,33 @@
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
 
-require_once('..'.DIRECTORY_SEPARATOR.'Qyy_G_en_File_bootstrap.inc.php');
-require_once('PHPUnit'.DIRECTORY_SEPARATOR.'Autoload.php');
+if (!defined('QYYG_FILE_PATH'))
+{
+  // For this to work before PHP 5.3.
+  // The first test is in case of someone reads this comment and decided to
+  // apply it:
+  // "http://php.net/manual/en/language.constants.predefined.php#105256".
+  // As a reminder, a magic constant CHANGES depending on the context, and the
+  // board of the comment creates a real constant.
+  // It may therefore be a `__DIR__` constant containing a false value if the
+  // code of the comment is called before, in a file who is in another
+  // directory and if the PHP version is < 5.3.
+  if (
+    (defined('__DIR__') && __DIR__ != dirname(__FILE__))
+    || !defined('__DIR__'))
+  {
+    define(
+      'QYYG_FILE_PATH',
+      dirname(__FILE__).DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR);
+  }
+  else
+  {
+    define(
+      'QYYG_FILE_PATH',
+      __DIR__.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR);
+  }
+}
+
+require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
+require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystemNode.class.php');
+require_once(QYYG_FILE_PATH.'Qyy_G_en_File.class.php');
