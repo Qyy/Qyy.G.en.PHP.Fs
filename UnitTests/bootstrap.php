@@ -34,4 +34,30 @@
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
 
-require_once 'PHPUnit/Autoload.php';
+if (!defined('QYYG_FILE_PATH'))
+{
+  if (
+    (defined('__DIR__')
+    && __DIR__ !=
+      realpath(
+        dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR))
+    || !defined('__DIR__'))
+  {
+    define(
+      'QYYG_FILE_PATH',
+      realpath(
+        dirname(__FILE__)
+          .DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR)
+            .DIRECTORY_SEPARATOR);
+  }
+  else
+  {
+    define(
+      'QYYG_FILE_PATH',
+      realpath(
+        __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR)
+          .DIRECTORY_SEPARATOR);
+  }
+}
+
+require_once('PHPUnit'.DIRECTORY_SEPARATOR.'Autoload.php');
