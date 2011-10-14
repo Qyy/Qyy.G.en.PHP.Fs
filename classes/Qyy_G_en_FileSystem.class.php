@@ -33,80 +33,36 @@
  * The fact that you are presently reading this means that you have had
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
-
-if (!defined('QYYG_FILE_PATH'))
-{
-  if (
-    (defined('__DIR__') && __DIR__ != dirname(__FILE__))
-    || !defined('__DIR__'))
-  {
-    define('QYYG_FILE_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
-  }
-  else
-  {
-    define('QYYG_FILE_PATH', __DIR__.DIRECTORY_SEPARATOR);
-  }
-}
-
-require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
-
+ 
 // TODO: doc
-class Qyy_G_en_FileSystemNode
+class Qyy_G_en_FileSystem
 {
-  /**
-   * @var string
-   */
-  protected $name;
   
   // TODO: doc
-  function __construct ($name)
+  // http://php.net/manual/en/function.file-exists.php
+  public static function ThrowExceptionIfNodeDoesNotExists ($name)
   {
-    Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
-
-    $this->name = $name;
-  }
-  
-  // TODO: doc
-  public function GetName ()
-  {
-    return $this->name;
-  }
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.basename.php
-  public function GetBasename ()
-  {
-    return basename($this->GetName());
-  }
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.dirname.php
-  public function GetDirname ()
-  {
-    return dirname($this->GetName());
-  }
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.realpath.php
-  public function GetRealpath ()
-  {
-    $return = realpath($this->GetName());
-    
-    if ($return === false)
+    if (!file_exists($name))
     {
-      $lastError = error_get_last();
-      
-      throw new Exception(
-        'Unable to determine the real path. '
-          .'It might be due to a lack of permissions.',
-        403,
-        new Exception(
-          'message: "'.$lastError['message'].'"'.PHP_EOL
-            .'file: "'.$lastError['file'].'"'.PHP_EOL
-            .'line: `'.$lastError['line'].'`'.PHP_EOL,
-          $derniereErreur['type']));
+      throw new InvalidArgumentException(
+        'This node does not exist or permissions are not set correctly: '
+          .PHP_EOL
+          .'"'.$name.'"',
+        404);
     }
-    
-    return $return;
+  }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.is-file.php
+  public static function ThrowExceptionIfNotFile ($name)
+  {
+    if (!is_file($name))
+    {
+      throw new InvalidArgumentException(
+        'This node does not seems to be a file: '
+          .PHP_EOL
+          .'"'.$name.'"',
+        400);
+    }
   }
 }

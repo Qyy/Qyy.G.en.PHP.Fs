@@ -35,7 +35,6 @@
  */
  
 require_once('bootstrap.php');
-require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
 
 /**
  * Test class for Qyy_G_en_FileSystem.
