@@ -33,8 +33,9 @@
  * The fact that you are presently reading this means that you have had
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
-
-require_once dirname(__FILE__) . '/../Qyy_G_en_FileSystem.class.php';
+ 
+require_once('bootstrap.php');
+require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
 
 /**
  * Test class for Qyy_G_en_FileSystem.
