@@ -48,6 +48,7 @@ if (!defined('QYYG_FILE_PATH'))
   }
 }
 
+require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
 require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystemNode.class.php');
 
 // TODO: doc
@@ -63,7 +64,6 @@ class Qyy_G_en_File extends Qyy_G_en_FileSystemNode
     $flags     = 0,
     $context   = null)
   {
-    
     if ($data === false && !file_exists($name))
     {
       throw new InvalidArgumentException(
@@ -106,6 +106,8 @@ class Qyy_G_en_File extends Qyy_G_en_FileSystemNode
             $derniereErreur['type']));
       }
     }
+    
+    Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
     
     $this->name = $name;
   }
