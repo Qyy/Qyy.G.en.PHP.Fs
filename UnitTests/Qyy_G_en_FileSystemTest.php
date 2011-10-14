@@ -46,27 +46,42 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   /**
    * @var array
    */
-  protected $names;
+  protected $filesNames;
 
   /**
    * @var array
    */
-  protected $fakeNames;
+  protected $fakeFilesNames;
+
+  /**
+   * @var array
+   */
+  protected $directoriesNames;
+
+  /**
+   * @var array
+   */
+  protected $fakeDirectoriesNames;
 
   /**
    * Sets up the fixture.
    */
   protected function setUp ()
   {
-    $this->names = array(
+    $this->filesNames = array(
       0 => '../readme.md',
       1 => '../.gitignore',
-      2 => '../README',
-      3 => '../',
-      4 => './');
+      2 => '../README');
     
-    $this->fakeNames = array(
+    $this->directoriesNames = array(
+      0 => '../',
+      1 => './');
+    
+    $this->fakeFilesNames = array(
       0 => 'foo.bar');
+      
+    $this->fakeDirectoriesNames = array(
+      0 => '../foobar/');
   }
   // 
   // /**
@@ -79,9 +94,17 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   // }
 
   
-  public function testThrowExceptionIfNodeDoesNotExists ()
+  public function testThrowExceptionIfNodeDoesNotExistsFilesNames ()
   {
-    foreach($this->names as $name)
+    foreach($this->filesNames as $name)
+    {
+      Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+    }
+  }
+  
+  public function testThrowExceptionIfNodeDoesNotExistsDirectoriesNames ()
+  {
+    foreach($this->directoriesNames as $name)
     {
       Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
     }
@@ -91,9 +114,21 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
    * Nonexistent node.
    * @expectedException InvalidArgumentException
    */
-  public function testThrowExceptionIfNodeDoesNotExistsFakeName ()
+  public function testThrowExceptionIfNodeDoesNotExistsFilesFakeName ()
   {
-    foreach($this->fakeNames as $name)
+    foreach($this->fakeFilesNames as $name)
+    {
+      Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+    }
+  }
+
+  /**
+   * Nonexistent node.
+   * @expectedException InvalidArgumentException
+   */
+  public function testThrowExceptionIfNodeDoesNotExistsDirectoriesFakeName ()
+  {
+    foreach($this->fakeDirectoriesNames as $name)
     {
       Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
     }
