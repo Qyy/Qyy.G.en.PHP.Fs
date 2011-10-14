@@ -34,6 +34,22 @@
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
 
+if (!defined('QYYG_FILE_PATH'))
+{
+  if (
+    (defined('__DIR__') && __DIR__ != dirname(__FILE__))
+    || !defined('__DIR__'))
+  {
+    define('QYYG_FILE_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+  }
+  else
+  {
+    define('QYYG_FILE_PATH', __DIR__.DIRECTORY_SEPARATOR);
+  }
+}
+
+require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
+
 // TODO: doc
 class Qyy_G_en_FileSystemNode
 {
@@ -45,14 +61,8 @@ class Qyy_G_en_FileSystemNode
   // TODO: doc
   function __construct ($name)
   {
-    if (!file_exists($name))
-    {
-      throw new InvalidArgumentException(
-        'This node does not exist or permissions are not set correctly: '
-          .PHP_EOL
-          .'"'.$name.'"',
-        404);
-    }
+    Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+
     $this->name = $name;
   }
   
