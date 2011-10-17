@@ -169,6 +169,9 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
       'testNewObject2');
   }
 
+//---
+  /*** Qyy_G_en_File::GetBasenameNoSuffix() ***/
+
   /**
    * @depends testNewObject
    */
@@ -212,6 +215,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('new', $this->objects[4]->GetBasenameNoSuffix());
   }
 
+  /*** END Qyy_G_en_File::GetBasenameNoSuffix() ***/
+  
+//---  
+  /*** Qyy_G_en_File::GetSuffix() ***/
+
   /**
    * @depends testNewObject
    */
@@ -252,6 +260,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   {
     $this->assertEquals('tmp', $this->objects[4]->GetSuffix());
   }
+  
+  /*** END Qyy_G_en_File::GetSuffix() ***/
+  
+//---
+  /*** Qyy_G_en_File::GetDirname() ***/
 
   /**
    * @depends testNewObject
@@ -265,7 +278,12 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
         $this->objects[$i]->GetDirname());
     }
   }
+  
+  /*** END Qyy_G_en_File::GetDirname() ***/
 
+//---
+  /*** Qyy_G_en_File::GetRealpath() ***/
+  
   /**
    * @depends testNewObject
    */
@@ -278,6 +296,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
         $this->objects[$i]->GetRealpath());
     }
   }
+  
+  /*** END Qyy_G_en_File::GetRealpath() ***/
+  
+//---
+  /*** Qyy_G_en_File::GetContents() ***/
   
   /**
    * @depends testNewObject
@@ -307,4 +330,6 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   {
     $this->assertEquals($this->data, $this->objects[4]->GetContents());
   }
+  
+  /*** END Qyy_G_en_File::GetContents() ***/
 }

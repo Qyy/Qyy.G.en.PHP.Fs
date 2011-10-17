@@ -92,6 +92,8 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   //   
   // }
 
+//---
+  /*** Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists() ***/
   
   public function testThrowExceptionIfNodeDoesNotExistsFilesNames ()
   {
@@ -110,10 +112,10 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * Nonexistent node.
+   * Nonexistent node with fake files names.
    * @expectedException InvalidArgumentException
    */
-  public function testThrowExceptionIfNodeDoesNotExistsFilesFakeName ()
+  public function testThrowExceptionIfNodeDoesNotExistsFakeFilesNames ()
   {
     foreach($this->fakeFilesNames as $name)
     {
@@ -122,16 +124,21 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * Nonexistent node.
+   * Nonexistent node with fake directories names.
    * @expectedException InvalidArgumentException
    */
-  public function testThrowExceptionIfNodeDoesNotExistsDirectoriesFakeName ()
+  public function testThrowExceptionIfNodeDoesNotExistsFakeDirectoriesNames ()
   {
     foreach($this->fakeDirectoriesNames as $name)
     {
       Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
     }
   }
+  
+  /*** END Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists() ***/
+ 
+//---
+  /*** Qyy_G_en_FileSystem::ThrowExceptionIfNotFile() ***/
   
   public function testThrowExceptionIfNotFileFilesNames ()
   {
@@ -176,6 +183,6 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
       Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
     }
   }
+  
+  /*** END Qyy_G_en_FileSystem::ThrowExceptionIfNotFile() ***/
 }
-
-?>

@@ -105,6 +105,9 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     new Qyy_G_en_FileSystemNode($this->fakeNames[0]);
   }
   
+//---
+  /*** Qyy_G_en_FileSystemNode::GetName() ***/
+  
   /**
    * @depends testNewObject
    */
@@ -117,7 +120,12 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
         $this->objects[$i]->GetName());
     }
   }
+  
+  /*** END Qyy_G_en_FileSystemNode::GetName() ***/
 
+//---
+  /*** Qyy_G_en_FileSystemNode::GetBasename() ***/
+    
   /**
    * @depends testNewObject
    */
@@ -131,6 +139,11 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     }
   }
 
+  /*** END Qyy_G_en_FileSystemNode::GetBasename() ***/
+
+//---
+  /*** Qyy_G_en_FileSystemNode::GetDirname() ***/
+
   /**
    * @depends testNewObject
    */
@@ -143,6 +156,11 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
         $this->objects[$i]->GetDirname());
     }
   }
+  
+  /*** END Qyy_G_en_FileSystemNode::GetDirname() ***/
+
+//---
+  /*** Qyy_G_en_FileSystemNode::GetRealpath() ***/
 
   /**
    * @depends testNewObject
@@ -156,4 +174,7 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
         $this->objects[$i]->GetRealpath());
     }
   }
+  
+  /*** END Qyy_G_en_FileSystemNode::GetRealpath() ***/
+  
 }
