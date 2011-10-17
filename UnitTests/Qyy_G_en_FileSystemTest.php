@@ -61,6 +61,27 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
    * @var array
    */
   protected $fakeDirectoriesNames;
+ 
+  /**
+   * @var string
+   */
+  protected $data;
+ 
+  /**
+   * @var Qyy_G_en_File
+   */
+  protected $overwrittenFile;
+ 
+  /**
+   * @var Qyy_G_en_File
+   */
+  protected $newFile;
+  
+  /**
+   * @var Qyy_G_en_File
+   */
+  protected $newFileToBeOverwrtitten;
+
 
   /**
    * Sets up the fixture.
@@ -70,7 +91,10 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
     $this->filesNames = array(
       0 => '../readme.md',
       1 => '../.gitignore',
-      2 => '../README');
+      2 => '../README',
+      3 => '../temp/overwrite.tmp',
+      4 => '../temp/new.tmp',
+      5 => '../temp/newoverwrite.tmp');
     
     $this->directoriesNames = array(
       0 => '../',
@@ -81,16 +105,45 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
       
     $this->fakeDirectoriesNames = array(
       0 => '../foobar/');
+    
+    $this->data = strval(time());
+    
+    $this->overwrittenFile =
+      Qyy_G_en_FileSystem::OverwriteFile(
+        $this->filesNames[3],
+        $this->data.'overwrittenFile');
+    
+    $this->newFile =
+      Qyy_G_en_FileSystem::CreateFile(
+        $this->filesNames[4],
+        $this->data.'newFile');
+    
+    $this->newFileToBeOverwrtitten =
+      Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+        $this->filesNames[5],
+        $this->data.'newFileToBeOverwrtitten');
   }
-  // 
-  // /**
-  //  * Tears down the fixture, for example, closes a network connection.
-  //  * This method is called after a test is executed.
-  //  */
-  // protected function tearDown ()
-  // {
-  //   
-  // }
+
+  
+  /**
+   * Tears down the fixture, for example, closes a network connection.
+   * This method is called after a test is executed.
+   */
+  protected function tearDown ()
+  {
+    // I reset the content of this file with its value when commited for the
+    // first time. So I don't have to see it in the list of modified files to
+    // commit.
+    file_put_contents($this->filesNames[3], '1318067799');
+   
+    // This file is used for the creation test without overwriting, so it's
+    // important to unlink it each time after the test
+    unlink('../temp/new.tmp');
+    
+    // This file is used for the creation and overwriting test, so it's
+    // important to unlink it each time after the test
+    unlink('../temp/newoverwrite.tmp');
+  }
 
 //---
   /*** Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists() ***/
@@ -236,4 +289,122 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   }
   
   /*** END Qyy_G_en_FileSystem::ThrowExceptionIfNotFile() ***/
+  
+//---
+  /*** Qyy_G_en_FileSystem::CreateOrOverwriteFile() ***/
+  
+  public function testCreateOrOverwriteFileCreation ()
+  {
+    $this->assertEquals(
+      true,
+      is_a($this->newFileToBeOverwrtitten, 'Qyy_G_en_File'));
+  }
+  
+  /**
+   * @depends testCreateOrOverwriteFileCreation
+   */
+  public function testCreateOrOverwriteFileWithGoodData ()
+  {
+    $this->assertEquals(
+      $this->data.'newFileToBeOverwrtitten',
+      $this->newFileToBeOverwrtitten->GetContents());
+  }
+  
+  /**
+   * @depends testCreateOrOverwriteFileCreation
+   */
+  public function testCreateOrOverwriteFileOverwriting ()
+  {
+    $this->newFileToBeOverwrtitten =
+      Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+        $this->filesNames[5],
+        $this->data.'newFileToBeOverwrtitten');
+    
+    $this->assertEquals(
+      true,
+      is_a($this->newFileToBeOverwrtitten, 'Qyy_G_en_File'));
+  }
+
+  /**
+   * @depends testCreateOrOverwriteFileCreation
+   */
+  public function testCreateOrOverwriteFileOverwritingWithGoodData ()
+  {
+    $this->newFileToBeOverwrtitten =
+      Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+        $this->filesNames[5],
+        $this->data.'CRUSH');
+    
+    $this->assertEquals(
+      $this->data.'CRUSH',
+      $this->newFileToBeOverwrtitten->GetContents());
+  }
+  
+  /*** END Qyy_G_en_FileSystem::CreateOrOverwriteFile() ***/
+
+//---
+  /*** Qyy_G_en_FileSystem::CreateFile() ***/
+  
+  public function testCreateFile ()
+  {
+    $this->assertEquals(
+      true,
+      is_a($this->newFile, 'Qyy_G_en_File'));
+  }
+  
+  /**
+   * @depends testCreateFile
+   */
+  public function testCreatedFileWithGoodData ()
+  {
+    $this->assertEquals(
+      $this->data.'newFile',
+      $this->newFile->GetContents());
+  }
+  
+  /**
+   * Attempting to create a file who already exists.
+   * @expectedException InvalidArgumentException
+   */
+  public function testCreateFileWithOverwrite ()
+  {
+    Qyy_G_en_FileSystem::CreateFile(
+      $this->filesNames[3],
+      'testCreateFileWithOverwrite');
+  }
+  
+  /*** END Qyy_G_en_FileSystem::CreateFile() ***/
+
+//---
+  /*** Qyy_G_en_FileSystem::OverwriteFile() ***/
+  
+  public function testOverwriteFile ()
+  {
+    $this->assertEquals(
+      true,
+      is_a($this->overwrittenFile, 'Qyy_G_en_File'));
+  }
+  
+  /**
+   * @depends testOverwriteFile
+   */
+  public function testOverwriteFileGoodData ()
+  {
+    $this->assertEquals(
+      $this->data.'overwrittenFile',
+      $this->overwrittenFile->GetContents());
+  }
+  
+  /**
+   * Attempting to create a file who already exists.
+   * @expectedException InvalidArgumentException
+   */
+  public function testOverwriteFileWithNonExistentFile ()
+  {
+    Qyy_G_en_FileSystem::OverwriteFile(
+      $this->fakeFilesNames[0],
+      'testOverwriteFileWithNonExistentFile');
+  }
+  
+  /*** END Qyy_G_en_FileSystem::OverwriteFile() ***/
 }
