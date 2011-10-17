@@ -45,7 +45,7 @@ class Qyy_G_en_FileSystem
     if (!file_exists($name))
     {
       throw new InvalidArgumentException(
-        'This node does not exist or permissions are not set correctly: '
+        'This node does not exists or permissions are not set correctly: '
           .PHP_EOL
           .'"'.$name.'"',
         404);
