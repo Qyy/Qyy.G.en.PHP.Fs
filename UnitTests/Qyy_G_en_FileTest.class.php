@@ -70,13 +70,11 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->names = array(
       0 => '../readme.md',
       1 => '../.gitignore',
-      2 => '../README',
-      3 => '../temp/overwrite.tmp',
-      4 => '../temp/new.tmp');
+      2 => '../README');
     
     $this->fakeNames = array(
       0 => 'foo.bar',
-      1 => '../temp/test.tmp',
+      1 => 'bar/temp/test.tmp',
       2 => '../temp/foo/new.tmp');
       
     $this->directoriesNames = array(
@@ -90,31 +88,15 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->objects[0] = new Qyy_G_en_File($this->names[0]);
     $this->objects[1] = new Qyy_G_en_File($this->names[1]);
     $this->objects[2] = new Qyy_G_en_File($this->names[2]);
-    
-    $this->objects[3] =
-      new Qyy_G_en_File(
-        $this->names[3],
-        $this->data,
-        true);
-    
-    $this->objects[4] =
-      new Qyy_G_en_File(
-        $this->names[4],
-        $this->data);
   }
 
-  /**
-   * Tears down the fixture.
-   */
-  protected function tearDown ()
-  {
-    // I reset the content of this file with its value when commited for the
-    // first time. So I don't have to see it in the list of modified files to
-    // commit.
-    file_put_contents($this->names[3], '1318067799');
-   
-    unlink($this->names[4]);
-  }
+  // /**
+  //  * Tears down the fixture.
+  //  */
+  // protected function tearDown ()
+  // {
+  // 
+  // }
 
   public function testNewObject ()
   {
@@ -142,31 +124,12 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
    * Nonexistent file.
    * @expectedException InvalidArgumentException
    */
-  public function testNewFakeObject0 ()
+  public function testNewFakeObject ()
   {
-    new Qyy_G_en_File($this->fakeNames[0]);
-  }
-  
-  /**
-   * Existing file, but overwriting parameter set to default (`false`).
-   * @expectedException OverflowException
-   */
-  public function testNewFakeObject1 ()
-  {
-    new Qyy_G_en_File(
-      $this->fakeNames[1],
-      'testNewObject1');
-  }
-  
-  /**
-   * Unable to create the file.
-   * @expectedException Exception
-   */
-  public function testNewFakeObject2 ()
-  {
-    new Qyy_G_en_File(
-      $this->fakeNames[2],
-      'testNewObject2');
+    foreach($this->fakeNames as $name)
+    {
+      new Qyy_G_en_File($name);
+    }
   }
 
 //---
@@ -197,24 +160,6 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('README', $this->objects[2]->GetBasenameNoSuffix());
   }
 
-  /**
-   * @depends testNewObject
-   */
-  public function testGetBasenameNoSuffix3 ()
-  {
-    $this->assertEquals(
-      'overwrite',
-      $this->objects[3]->GetBasenameNoSuffix());
-  }
-  
-  /**
-   * @depends testNewObject
-   */
-  public function testGetBasenameNoSuffix4 ()
-  {
-    $this->assertEquals('new', $this->objects[4]->GetBasenameNoSuffix());
-  }
-
   /*** END Qyy_G_en_File::GetBasenameNoSuffix() ***/
   
 //---  
@@ -243,22 +188,6 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   public function testGetSuffix2 ()
   {
     $this->objects[2]->GetSuffix();
-  }
-  
-  /**
-   * @depends testNewObject
-   */
-  public function testGetSuffix3 ()
-  {
-    $this->assertEquals('tmp', $this->objects[3]->GetSuffix());
-  }
-
-  /**
-   * @depends testNewObject
-   */
-  public function testGetSuffix4 ()
-  {
-    $this->assertEquals('tmp', $this->objects[4]->GetSuffix());
   }
   
   /*** END Qyy_G_en_File::GetSuffix() ***/
@@ -313,22 +242,6 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
         file_get_contents($name),
         $this->objects[$i]->GetContents());
     }
-  }
-  
-  /**
-   * @depends testNewObject
-   */
-  public function testGetContents3 ()
-  {
-    $this->assertEquals($this->data, $this->objects[3]->GetContents());
-  }
-  
-  /**
-   * @depends testNewObject
-   */
-  public function testGetContents4 ()
-  {
-    $this->assertEquals($this->data, $this->objects[4]->GetContents());
   }
   
   /*** END Qyy_G_en_File::GetContents() ***/

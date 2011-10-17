@@ -40,59 +40,11 @@ class Qyy_G_en_File extends Qyy_G_en_FileSystemNode
   
   // TODO: doc
   // http://php.net/manual/en/function.file-put-contents.php
-  function __construct (
-    $name,
-    $data      = false,
-    $overwrite = false,
-    $flags     = 0,
-    $context   = null)
-  {
-    if ($data === false && !file_exists($name))
-    {
-      throw new InvalidArgumentException(
-        'This file does not exist or permissions are not set correctly: '
-          .PHP_EOL
-          .'"'.$name.'"',
-        404);
-    }
-    else if ($data !== false
-          && $overwrite === false
-          && file_exists($name))
-    {
-      throw new OverflowException(
-        'This file already exist and overwrite is set to false: '
-          .PHP_EOL
-          .'"'.$name.'"',
-        423);
-    }
-    else if ($data !== false)
-    {
-      $success = 
-        file_put_contents(
-          $name,
-          $data,
-          $flags,
-          $context);
-        
-      if ($success === false)
-      {
-        $lastError = error_get_last();
-      
-        throw new Exception(
-          'Unable to create the file. See last php error or previous '
-            .'exception of this one for more informations.',
-          500,
-          new Exception(
-            'message: "'.$lastError['message'].'"'.PHP_EOL
-              .'file: "'.$lastError['file'].'"'.PHP_EOL
-              .'line: `'.$lastError['line'].'`'.PHP_EOL,
-            $derniereErreur['type']));
-      }
-    }
-    
+  function __construct ($name)
+  {  
     Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
     
-    $this->name = $name;
+    parent::__construct($name);
   }
 
   // TODO: doc
