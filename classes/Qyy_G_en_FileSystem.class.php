@@ -53,6 +53,22 @@ class Qyy_G_en_FileSystem
   }
   
   // TODO: doc
+  // http://php.net/manual/en/function.file-exists.php
+  public static function ThrowExceptionIfNodeExists ($name)
+  {
+    if (file_exists($name))
+    {
+      throw new InvalidArgumentException(
+        'This node already exists and is not overwritable in this '
+          .'circumstances (overwriting was maybe not called explicitly, or '
+          .'maybe that the permissions on the file does not allow it): '
+          .PHP_EOL
+          .'"'.$name.'"',
+        404);
+    }
+  }
+  
+  // TODO: doc
   // http://php.net/manual/en/function.is-file.php
   public static function ThrowExceptionIfNotFile ($name)
   {
