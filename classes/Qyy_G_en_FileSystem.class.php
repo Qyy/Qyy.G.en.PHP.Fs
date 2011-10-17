@@ -81,4 +81,80 @@ class Qyy_G_en_FileSystem
         400);
     }
   }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.file-put-contents.php
+  public static function CreateOrOverwriteFile (
+    $filename,
+    $data,
+    $flags = 0,
+    $context = null)
+  {
+    try
+    {
+      // If the node exist…
+      Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($filename);
+    }
+    catch (InvalidArgumentException $ex)
+    {
+      // … and is not a file, throw an Exception.
+      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($filename);
+    }
+    
+    $success = 
+      file_put_contents(
+        $filename,
+        $data,
+        $flags,
+        $context);
+      
+    if ($success === false)
+    {
+      $lastError = error_get_last();
+    
+      throw new Exception(
+        'Unable to create the file. See last php error or previous '
+          .'exception of this one for more informations.',
+        500,
+        new Exception(
+          'message: "'.$lastError['message'].'"'.PHP_EOL
+            .'file: "'.$lastError['file'].'"'.PHP_EOL
+            .'line: `'.$lastError['line'].'`'.PHP_EOL,
+          $derniereErreur['type']));
+    }
+    
+    return new Qyy_G_en_File($filename);
+  }
+  
+  // TODO: doc
+  public static function CreateFile (
+    $filename,
+    $data,
+    $flags = 0,
+    $context = null)
+  {
+    Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($filename);
+    
+    return Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+      $filename,
+      $data,
+      $flags,
+      $context);
+  }
+  
+  // TODO: doc
+  public static function OverwriteFile (
+    $filename,
+    $data,
+    $flags = 0,
+    $context = null)
+  {
+    Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($filename);
+    
+    return Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+      $filename,
+      $data,
+      $flags,
+      $context);
+  }
 }
