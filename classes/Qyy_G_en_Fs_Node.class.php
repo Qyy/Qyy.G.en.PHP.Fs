@@ -34,33 +34,63 @@
  * knowledge of the CeCILL-B license and that you accept its terms.
  */
 
-if (!defined('QYYG_FILE_PATH'))
+// TODO: doc
+class Qyy_G_en_Fs_Node
 {
-  // For this to work before PHP 5.3.
-  // The first test is in case of someone reads this comment and decided to
-  // apply it:
-  // "http://php.net/manual/en/language.constants.predefined.php#105256".
-  // As a reminder, a magic constant CHANGES depending on the context, and the
-  // board of the comment creates a real constant.
-  // It may therefore be a `__DIR__` constant containing a false value if the
-  // code of the comment is called before, in a file who is in another
-  // directory and if the PHP version is < 5.3.
-  if (
-    (defined('__DIR__') && __DIR__ != dirname(__FILE__))
-    || !defined('__DIR__'))
+  /**
+   * @var string
+   */
+  protected $name;
+  
+  // TODO: doc
+  function __construct ($name)
   {
-    define(
-      'QYYG_FILE_PATH',
-      dirname(__FILE__).DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR);
+    Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($name);
+
+    $this->name = $name;
   }
-  else
+  
+  // TODO: doc
+  public function GetName ()
   {
-    define(
-      'QYYG_FILE_PATH',
-      __DIR__.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR);
+    return $this->name;
+  }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.basename.php
+  public function GetBasename ()
+  {
+    return basename($this->GetName());
+  }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.dirname.php
+  public function GetDirname ()
+  {
+    return dirname($this->GetName());
+  }
+  
+  // TODO: doc
+  // http://php.net/manual/en/function.realpath.php
+  public function GetRealpath ()
+  {
+    $return = realpath($this->GetName());
+    
+    if ($return === false)
+    {
+      $lastError = error_get_last();
+      
+      throw new Exception(
+        'Unable to determine the real path. '
+          .'It might be due to a lack of permissions.',
+        403,
+        new Exception(
+          'message: "'.$lastError['message'].'"'.PHP_EOL
+            .'file: "'.$lastError['file'].'"'.PHP_EOL
+            .'line: `'.$lastError['line'].'`'.PHP_EOL,
+          $derniereErreur['type']));
+    }
+    
+    return $return;
   }
 }
-
-require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystem.class.php');
-require_once(QYYG_FILE_PATH.'Qyy_G_en_FileSystemNode.class.php');
-require_once(QYYG_FILE_PATH.'Qyy_G_en_File.class.php');

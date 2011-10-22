@@ -37,9 +37,9 @@
 require_once('bootstrap.php');
 
 /**
- * Test class for Qyy_G_en_File.
+ * Test class for Qyy_G_en_Fs_File.
  */
-class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
+class Qyy_G_en_Fs_FileTest extends PHPUnit_Framework_TestCase
 {
 
   /**
@@ -85,9 +85,9 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     
     $this->data = strval(time());
     
-    $this->objects[0] = new Qyy_G_en_File($this->names[0]);
-    $this->objects[1] = new Qyy_G_en_File($this->names[1]);
-    $this->objects[2] = new Qyy_G_en_File($this->names[2]);
+    $this->objects[0] = new Qyy_G_en_Fs_File($this->names[0]);
+    $this->objects[1] = new Qyy_G_en_Fs_File($this->names[1]);
+    $this->objects[2] = new Qyy_G_en_Fs_File($this->names[2]);
   }
 
   // /**
@@ -104,7 +104,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     {
       $this->assertEquals(
         true,
-        is_a($object, 'Qyy_G_en_File'));
+        is_a($object, 'Qyy_G_en_Fs_File'));
     }
   }
  
@@ -116,7 +116,7 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->directoriesNames as $name)
     {
-      new Qyy_G_en_File($name);
+      new Qyy_G_en_Fs_File($name);
     }
   }
 
@@ -128,12 +128,12 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeNames as $name)
     {
-      new Qyy_G_en_File($name);
+      new Qyy_G_en_Fs_File($name);
     }
   }
 
 //---
-  /*** Qyy_G_en_File::GetBasenameNoSuffix() ***/
+  /*** Qyy_G_en_Fs_File::GetBasenameNoSuffix() ***/
 
   /**
    * @depends testNewObject
@@ -160,10 +160,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('README', $this->objects[2]->GetBasenameNoSuffix());
   }
 
-  /*** END Qyy_G_en_File::GetBasenameNoSuffix() ***/
+  /*** END Qyy_G_en_Fs_File::GetBasenameNoSuffix() ***/
   
 //---  
-  /*** Qyy_G_en_File::GetSuffix() ***/
+  /*** Qyy_G_en_Fs_File::GetSuffix() ***/
 
   /**
    * @depends testNewObject
@@ -190,10 +190,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     $this->objects[2]->GetSuffix();
   }
   
-  /*** END Qyy_G_en_File::GetSuffix() ***/
+  /*** END Qyy_G_en_Fs_File::GetSuffix() ***/
   
 //---
-  /*** Qyy_G_en_File::GetDirname() ***/
+  /*** Qyy_G_en_Fs_File::GetDirname() ***/
 
   /**
    * @depends testNewObject
@@ -208,10 +208,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     }
   }
   
-  /*** END Qyy_G_en_File::GetDirname() ***/
+  /*** END Qyy_G_en_Fs_File::GetDirname() ***/
 
 //---
-  /*** Qyy_G_en_File::GetRealpath() ***/
+  /*** Qyy_G_en_Fs_File::GetRealpath() ***/
   
   /**
    * @depends testNewObject
@@ -226,10 +226,10 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     }
   }
   
-  /*** END Qyy_G_en_File::GetRealpath() ***/
+  /*** END Qyy_G_en_Fs_File::GetRealpath() ***/
   
 //---
-  /*** Qyy_G_en_File::GetContents() ***/
+  /*** Qyy_G_en_Fs_File::GetContents() ***/
   
   /**
    * @depends testNewObject
@@ -244,5 +244,5 @@ class Qyy_G_en_FileTest extends PHPUnit_Framework_TestCase
     }
   }
   
-  /*** END Qyy_G_en_File::GetContents() ***/
+  /*** END Qyy_G_en_Fs_File::GetContents() ***/
 }

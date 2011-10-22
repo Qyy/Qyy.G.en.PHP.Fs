@@ -35,7 +35,7 @@
  */
  
 // TODO: doc
-class Qyy_G_en_FileSystem
+class Qyy_G_en_Fs
 {
   
   // TODO: doc
@@ -93,12 +93,12 @@ class Qyy_G_en_FileSystem
     try
     {
       // If the node exist…
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($filename);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeExists($filename);
     }
     catch (InvalidArgumentException $ex)
     {
       // … and is not a file, throw an Exception.
-      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($filename);
+      Qyy_G_en_Fs::ThrowExceptionIfNotFile($filename);
     }
     
     $success = 
@@ -123,7 +123,7 @@ class Qyy_G_en_FileSystem
           $derniereErreur['type']));
     }
     
-    return new Qyy_G_en_File($filename);
+    return new Qyy_G_en_Fs_File($filename);
   }
   
   // TODO: doc
@@ -133,9 +133,9 @@ class Qyy_G_en_FileSystem
     $flags = 0,
     $context = null)
   {
-    Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($filename);
+    Qyy_G_en_Fs::ThrowExceptionIfNodeExists($filename);
     
-    return Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+    return Qyy_G_en_Fs::CreateOrOverwriteFile(
       $filename,
       $data,
       $flags,
@@ -149,9 +149,9 @@ class Qyy_G_en_FileSystem
     $flags = 0,
     $context = null)
   {
-    Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($filename);
+    Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($filename);
     
-    return Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+    return Qyy_G_en_Fs::CreateOrOverwriteFile(
       $filename,
       $data,
       $flags,

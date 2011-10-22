@@ -37,9 +37,9 @@
 require_once('bootstrap.php');
 
 /**
- * Test class for Qyy_G_en_FileSystemNode.
+ * Test class for Qyy_G_en_Fs_Node.
  */
-class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
+class Qyy_G_en_Fs_NodeTest extends PHPUnit_Framework_TestCase
 {
 
   /**
@@ -74,7 +74,7 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     
     foreach($this->names as $i => $name)
     {
-      $this->objects[$i] = new Qyy_G_en_FileSystemNode($this->names[$i]);
+      $this->objects[$i] = new Qyy_G_en_Fs_Node($this->names[$i]);
     }
   }
 
@@ -92,7 +92,7 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
    {
      $this->assertEquals(
        true,
-       is_a($object, 'Qyy_G_en_FileSystemNode'));
+       is_a($object, 'Qyy_G_en_Fs_Node'));
    }
  }
 
@@ -102,11 +102,11 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
    */
   public function testNewFakeObject0 ()
   {
-    new Qyy_G_en_FileSystemNode($this->fakeNames[0]);
+    new Qyy_G_en_Fs_Node($this->fakeNames[0]);
   }
   
 //---
-  /*** Qyy_G_en_FileSystemNode::GetName() ***/
+  /*** Qyy_G_en_Fs_Node::GetName() ***/
   
   /**
    * @depends testNewObject
@@ -121,10 +121,10 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     }
   }
   
-  /*** END Qyy_G_en_FileSystemNode::GetName() ***/
+  /*** END Qyy_G_en_Fs_Node::GetName() ***/
 
 //---
-  /*** Qyy_G_en_FileSystemNode::GetBasename() ***/
+  /*** Qyy_G_en_Fs_Node::GetBasename() ***/
     
   /**
    * @depends testNewObject
@@ -139,10 +139,10 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     }
   }
 
-  /*** END Qyy_G_en_FileSystemNode::GetBasename() ***/
+  /*** END Qyy_G_en_Fs_Node::GetBasename() ***/
 
 //---
-  /*** Qyy_G_en_FileSystemNode::GetDirname() ***/
+  /*** Qyy_G_en_Fs_Node::GetDirname() ***/
 
   /**
    * @depends testNewObject
@@ -157,10 +157,10 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     }
   }
   
-  /*** END Qyy_G_en_FileSystemNode::GetDirname() ***/
+  /*** END Qyy_G_en_Fs_Node::GetDirname() ***/
 
 //---
-  /*** Qyy_G_en_FileSystemNode::GetRealpath() ***/
+  /*** Qyy_G_en_Fs_Node::GetRealpath() ***/
 
   /**
    * @depends testNewObject
@@ -175,6 +175,6 @@ class Qyy_G_en_FileSystemNodeTest extends PHPUnit_Framework_TestCase
     }
   }
   
-  /*** END Qyy_G_en_FileSystemNode::GetRealpath() ***/
+  /*** END Qyy_G_en_Fs_Node::GetRealpath() ***/
   
 }

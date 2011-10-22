@@ -37,9 +37,9 @@
 require_once('bootstrap.php');
 
 /**
- * Test class for Qyy_G_en_FileSystem.
+ * Test class for Qyy_G_en_Fs.
  */
-class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
+class Qyy_G_en_FsTest extends PHPUnit_Framework_TestCase
 {
 
   /**
@@ -68,17 +68,17 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   protected $data;
  
   /**
-   * @var Qyy_G_en_File
+   * @var Qyy_G_en_Fs_File
    */
   protected $overwrittenFile;
  
   /**
-   * @var Qyy_G_en_File
+   * @var Qyy_G_en_Fs_File
    */
   protected $newFile;
   
   /**
-   * @var Qyy_G_en_File
+   * @var Qyy_G_en_Fs_File
    */
   protected $newFileToBeOverwrtitten;
 
@@ -109,17 +109,17 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
     $this->data = strval(time());
     
     $this->overwrittenFile =
-      Qyy_G_en_FileSystem::OverwriteFile(
+      Qyy_G_en_Fs::OverwriteFile(
         $this->filesNames[3],
         $this->data.'overwrittenFile');
     
     $this->newFile =
-      Qyy_G_en_FileSystem::CreateFile(
+      Qyy_G_en_Fs::CreateFile(
         $this->filesNames[4],
         $this->data.'newFile');
     
     $this->newFileToBeOverwrtitten =
-      Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+      Qyy_G_en_Fs::CreateOrOverwriteFile(
         $this->filesNames[5],
         $this->data.'newFileToBeOverwrtitten');
   }
@@ -146,13 +146,13 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   }
 
 //---
-  /*** Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists() ***/
+  /*** Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists() ***/
   
   public function testThrowExceptionIfNodeDoesNotExistsFilesNames ()
   {
     foreach($this->filesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($name);
     }
   }
   
@@ -160,7 +160,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->directoriesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($name);
     }
   }
   
@@ -172,7 +172,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeFilesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($name);
     }
   }
 
@@ -184,14 +184,14 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeDirectoriesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($name);
     }
   }
   
-  /*** END Qyy_G_en_FileSystem::ThrowExceptionIfNodeDoesNotExists() ***/
+  /*** END Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists() ***/
  
 //---
-  /*** Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists() ***/
+  /*** Qyy_G_en_Fs::ThrowExceptionIfNodeExists() ***/
   
   /**
    * Existent file.
@@ -201,7 +201,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->filesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeExists($name);
     }
   }
   
@@ -213,7 +213,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->directoriesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeExists($name);
     }
   }
   
@@ -224,7 +224,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeFilesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeExists($name);
     }
   }
 
@@ -235,20 +235,20 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeDirectoriesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNodeExists($name);
     }
   }
   
-  /*** END Qyy_G_en_FileSystem::ThrowExceptionIfNodeExists() ***/
+  /*** END Qyy_G_en_Fs::ThrowExceptionIfNodeExists() ***/
 
 //---
-  /*** Qyy_G_en_FileSystem::ThrowExceptionIfNotFile() ***/
+  /*** Qyy_G_en_Fs::ThrowExceptionIfNotFile() ***/
   
   public function testThrowExceptionIfNotFileFilesNames ()
   {
     foreach($this->filesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNotFile($name);
     }
   }
   
@@ -260,7 +260,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->directoriesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNotFile($name);
     }
   }
   
@@ -272,7 +272,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeFilesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNotFile($name);
     }
   }
 
@@ -284,20 +284,20 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   {
     foreach($this->fakeDirectoriesNames as $name)
     {
-      Qyy_G_en_FileSystem::ThrowExceptionIfNotFile($name);
+      Qyy_G_en_Fs::ThrowExceptionIfNotFile($name);
     }
   }
   
-  /*** END Qyy_G_en_FileSystem::ThrowExceptionIfNotFile() ***/
+  /*** END Qyy_G_en_Fs::ThrowExceptionIfNotFile() ***/
   
 //---
-  /*** Qyy_G_en_FileSystem::CreateOrOverwriteFile() ***/
+  /*** Qyy_G_en_Fs::CreateOrOverwriteFile() ***/
   
   public function testCreateOrOverwriteFileCreation ()
   {
     $this->assertEquals(
       true,
-      is_a($this->newFileToBeOverwrtitten, 'Qyy_G_en_File'));
+      is_a($this->newFileToBeOverwrtitten, 'Qyy_G_en_Fs_File'));
   }
   
   /**
@@ -316,13 +316,13 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   public function testCreateOrOverwriteFileOverwriting ()
   {
     $this->newFileToBeOverwrtitten =
-      Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+      Qyy_G_en_Fs::CreateOrOverwriteFile(
         $this->filesNames[5],
         $this->data.'newFileToBeOverwrtitten');
     
     $this->assertEquals(
       true,
-      is_a($this->newFileToBeOverwrtitten, 'Qyy_G_en_File'));
+      is_a($this->newFileToBeOverwrtitten, 'Qyy_G_en_Fs_File'));
   }
 
   /**
@@ -331,7 +331,7 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
   public function testCreateOrOverwriteFileOverwritingWithGoodData ()
   {
     $this->newFileToBeOverwrtitten =
-      Qyy_G_en_FileSystem::CreateOrOverwriteFile(
+      Qyy_G_en_Fs::CreateOrOverwriteFile(
         $this->filesNames[5],
         $this->data.'CRUSH');
     
@@ -340,16 +340,16 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
       $this->newFileToBeOverwrtitten->GetContents());
   }
   
-  /*** END Qyy_G_en_FileSystem::CreateOrOverwriteFile() ***/
+  /*** END Qyy_G_en_Fs::CreateOrOverwriteFile() ***/
 
 //---
-  /*** Qyy_G_en_FileSystem::CreateFile() ***/
+  /*** Qyy_G_en_Fs::CreateFile() ***/
   
   public function testCreateFile ()
   {
     $this->assertEquals(
       true,
-      is_a($this->newFile, 'Qyy_G_en_File'));
+      is_a($this->newFile, 'Qyy_G_en_Fs_File'));
   }
   
   /**
@@ -368,21 +368,21 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
    */
   public function testCreateFileWithOverwrite ()
   {
-    Qyy_G_en_FileSystem::CreateFile(
+    Qyy_G_en_Fs::CreateFile(
       $this->filesNames[3],
       'testCreateFileWithOverwrite');
   }
   
-  /*** END Qyy_G_en_FileSystem::CreateFile() ***/
+  /*** END Qyy_G_en_Fs::CreateFile() ***/
 
 //---
-  /*** Qyy_G_en_FileSystem::OverwriteFile() ***/
+  /*** Qyy_G_en_Fs::OverwriteFile() ***/
   
   public function testOverwriteFile ()
   {
     $this->assertEquals(
       true,
-      is_a($this->overwrittenFile, 'Qyy_G_en_File'));
+      is_a($this->overwrittenFile, 'Qyy_G_en_Fs_File'));
   }
   
   /**
@@ -401,10 +401,10 @@ class Qyy_G_en_FileSystemTest extends PHPUnit_Framework_TestCase
    */
   public function testOverwriteFileWithNonExistentFile ()
   {
-    Qyy_G_en_FileSystem::OverwriteFile(
+    Qyy_G_en_Fs::OverwriteFile(
       $this->fakeFilesNames[0],
       'testOverwriteFileWithNonExistentFile');
   }
   
-  /*** END Qyy_G_en_FileSystem::OverwriteFile() ***/
+  /*** END Qyy_G_en_Fs::OverwriteFile() ***/
 }
