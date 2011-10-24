@@ -37,9 +37,17 @@
 // TODO: doc
 class Qyy_G_en_Fs
 {
-  
-  // TODO: doc
-  // http://php.net/manual/en/function.file-exists.php
+
+  /**
+   * Throw an Exception in the case of the designated node in the parameter
+   * `$name` does not exits.
+   * @link http://php.net/manual/en/function.file-exists.php
+   * @param string $name <p>
+   * Path to the file or directory. <br/>
+   * On windows, use `//computername/share/filename` or
+   * `\\computername\share\filename` to check files on network shares.
+   * <\p>
+   */
   public static function ThrowExceptionIfNodeDoesNotExists ($name)
   {
     if (!file_exists($name))
@@ -52,8 +60,16 @@ class Qyy_G_en_Fs
     }
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.file-exists.php
+  /**
+   * Throw an Exception in the case of the designated node in the parameter
+   * `$name` already exits.
+   * @link http://php.net/manual/en/function.file-exists.php
+   * @param string $name <p>
+   * Path to the file or directory. <br/>
+   * On windows, use `//computername/share/filename` or
+   * `\\computername\share\filename` to check files on network shares.
+   * <\p>
+   */
   public static function ThrowExceptionIfNodeExists ($name)
   {
     if (file_exists($name))
@@ -68,8 +84,14 @@ class Qyy_G_en_Fs
     }
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.is-file.php
+  /** 
+   * Throw an Exception in the case of the designated node in the parameter
+   * `$name` is not a file.
+   * @link http://php.net/manual/en/function.is-file.php
+   * @param string $name  <p>
+   * Path to the file.
+   * </p>
+   */
   public static function ThrowExceptionIfNotFile ($name)
   {
     if (!is_file($name))
@@ -82,8 +104,98 @@ class Qyy_G_en_Fs
     }
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.file-put-contents.php
+  /**
+   * Overwrite the content of `$filename` with `$data`. If `$filename` does
+   * not exist, the file is created.
+   * @link http://php.net/manual/en/function.file-put-contents.php
+   * @param string $filename <p>
+   * Path to the file where to write the data.
+   * </p>
+   * @param mixed $data <p>
+   * The data to write. Can be either a string, an
+   * array or a stream resource.
+   * </p>
+   * <p>
+   * If data is a stream resource, the
+   * remaining buffer of that stream will be copied to the specified file.
+   * This is similar with using stream_copy_to_stream.
+   * </p>
+   * <p>
+   * You can also specify the data parameter as a single
+   * dimension array. This is equivalent to
+   * file_put_contents($filename, implode('', $array)).
+   * </p>
+   * @param int $flags [optional] <p>
+   * The value of flags can be any combination of 
+   * the following flags (with some restrictions), joined with the binary OR 
+   * (|) operator.
+   * </p>
+   * <p>
+   * <table>
+   * Available flags
+   * <tr valign="top">
+   * <td>Flag</td>
+   * <td>Description</td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_USE_INCLUDE_PATH
+   * </td>
+   * <td>
+   * Search for filename in the include directory.
+   * See include_path for more
+   * information.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_APPEND
+   * </td>
+   * <td>
+   * If file filename already exists, append 
+   * the data to the file instead of overwriting it. Mutually
+   * exclusive with LOCK_EX since appends are atomic and thus there
+   * is no reason to lock.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * LOCK_EX
+   * </td>
+   * <td>
+   * Acquire an exclusive lock on the file while proceeding to the 
+   * writing. Mutually exclusive with FILE_APPEND.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_TEXT
+   * </td>
+   * <td>
+   * data is written in text mode. If unicode 
+   * semantics are enabled, the default encoding is UTF-8.
+   * You can specify a different encoding by creating a custom context
+   * or by using the stream_default_encoding to
+   * change the default. This flag cannot be used with 
+   * FILE_BINARY. This flag is only available since
+   * PHP 6.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_BINARY
+   * </td>
+   * <td>
+   * data will be written in binary mode. This
+   * is the default setting and cannot be used with
+   * FILE_TEXT. This flag is only available since
+   * PHP 6.
+   * </td>
+   * </tr>
+   * </table>
+   * </p>
+   * @return Qyy_G_en_Fs_File a new `Qyy_G_en_Fs_File` instance. 
+   */
   public static function CreateOrOverwriteFile (
     $filename,
     $data,
@@ -126,7 +238,97 @@ class Qyy_G_en_Fs
     return new Qyy_G_en_Fs_File($filename);
   }
   
-  // TODO: doc
+  /**
+   * Create the content of `$filename` with `$data`. If `$filename` already
+   * exits, an exception is thrown.
+   * @param string $filename <p>
+   * Path to the file where to write the data.
+   * </p>
+   * @param mixed $data <p>
+   * The data to write. Can be either a string, an
+   * array or a stream resource.
+   * </p>
+   * <p>
+   * If data is a stream resource, the
+   * remaining buffer of that stream will be copied to the specified file.
+   * This is similar with using stream_copy_to_stream.
+   * </p>
+   * <p>
+   * You can also specify the data parameter as a single
+   * dimension array. This is equivalent to
+   * file_put_contents($filename, implode('', $array)).
+   * </p>
+   * @param int $flags [optional] <p>
+   * The value of flags can be any combination of 
+   * the following flags (with some restrictions), joined with the binary OR 
+   * (|) operator.
+   * </p>
+   * <p>
+   * <table>
+   * Available flags
+   * <tr valign="top">
+   * <td>Flag</td>
+   * <td>Description</td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_USE_INCLUDE_PATH
+   * </td>
+   * <td>
+   * Search for filename in the include directory.
+   * See include_path for more
+   * information.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_APPEND
+   * </td>
+   * <td>
+   * If file filename already exists, append 
+   * the data to the file instead of overwriting it. Mutually
+   * exclusive with LOCK_EX since appends are atomic and thus there
+   * is no reason to lock.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * LOCK_EX
+   * </td>
+   * <td>
+   * Acquire an exclusive lock on the file while proceeding to the 
+   * writing. Mutually exclusive with FILE_APPEND.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_TEXT
+   * </td>
+   * <td>
+   * data is written in text mode. If unicode 
+   * semantics are enabled, the default encoding is UTF-8.
+   * You can specify a different encoding by creating a custom context
+   * or by using the stream_default_encoding to
+   * change the default. This flag cannot be used with 
+   * FILE_BINARY. This flag is only available since
+   * PHP 6.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_BINARY
+   * </td>
+   * <td>
+   * data will be written in binary mode. This
+   * is the default setting and cannot be used with
+   * FILE_TEXT. This flag is only available since
+   * PHP 6.
+   * </td>
+   * </tr>
+   * </table>
+   * </p>
+   * @return Qyy_G_en_Fs_File a new `Qyy_G_en_Fs_File` instance.
+   */
   public static function CreateFile (
     $filename,
     $data,
@@ -142,7 +344,97 @@ class Qyy_G_en_Fs
       $context);
   }
   
-  // TODO: doc
+  /**
+   * Overwrite the content of `$filename` with `$data`. If `$filename` does not
+   * exits, an exception is thrown.
+   * @param string $filename <p>
+   * Path to the file where to write the data.
+   * </p>
+   * @param mixed $data <p>
+   * The data to write. Can be either a string, an
+   * array or a stream resource.
+   * </p>
+   * <p>
+   * If data is a stream resource, the
+   * remaining buffer of that stream will be copied to the specified file.
+   * This is similar with using stream_copy_to_stream.
+   * </p>
+   * <p>
+   * You can also specify the data parameter as a single
+   * dimension array. This is equivalent to
+   * file_put_contents($filename, implode('', $array)).
+   * </p>
+   * @param int $flags [optional] <p>
+   * The value of flags can be any combination of 
+   * the following flags (with some restrictions), joined with the binary OR 
+   * (|) operator.
+   * </p>
+   * <p>
+   * <table>
+   * Available flags
+   * <tr valign="top">
+   * <td>Flag</td>
+   * <td>Description</td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_USE_INCLUDE_PATH
+   * </td>
+   * <td>
+   * Search for filename in the include directory.
+   * See include_path for more
+   * information.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_APPEND
+   * </td>
+   * <td>
+   * If file filename already exists, append 
+   * the data to the file instead of overwriting it. Mutually
+   * exclusive with LOCK_EX since appends are atomic and thus there
+   * is no reason to lock.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * LOCK_EX
+   * </td>
+   * <td>
+   * Acquire an exclusive lock on the file while proceeding to the 
+   * writing. Mutually exclusive with FILE_APPEND.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_TEXT
+   * </td>
+   * <td>
+   * data is written in text mode. If unicode 
+   * semantics are enabled, the default encoding is UTF-8.
+   * You can specify a different encoding by creating a custom context
+   * or by using the stream_default_encoding to
+   * change the default. This flag cannot be used with 
+   * FILE_BINARY. This flag is only available since
+   * PHP 6.
+   * </td>
+   * </tr>
+   * <tr valign="top">
+   * <td>
+   * FILE_BINARY
+   * </td>
+   * <td>
+   * data will be written in binary mode. This
+   * is the default setting and cannot be used with
+   * FILE_TEXT. This flag is only available since
+   * PHP 6.
+   * </td>
+   * </tr>
+   * </table>
+   * </p>
+   * @return Qyy_G_en_Fs_File a new `Qyy_G_en_Fs_File` instance.
+   */
   public static function OverwriteFile (
     $filename,
     $data,
