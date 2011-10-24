@@ -38,8 +38,13 @@
 class Qyy_G_en_Fs_File extends Qyy_G_en_Fs_Node
 {
   
-  // TODO: doc
-  // http://php.net/manual/en/function.file-put-contents.php
+  /**
+   * Create a new `Qyy_G_en_Fs_Node` object. If `$name` is not a file, an
+   * exception is thrown.
+   * @param string $name <p>
+   * Path to the file.
+   * </p>
+   */
   function __construct ($name)
   {  
     Qyy_G_en_Fs::ThrowExceptionIfNotFile($name);
@@ -47,8 +52,12 @@ class Qyy_G_en_Fs_File extends Qyy_G_en_Fs_Node
     parent::__construct($name);
   }
 
-  // TODO: doc
-  // http://php.net/manual/en/function.pathinfo.php
+  /**
+   * Return the name of the file whitout extension. If it's `null` or empty, 
+   * an exception is thrown.
+   * @link http://php.net/manual/en/function.pathinfo.php
+   * @return string the name of the file whitout extension.
+   */
   public function GetBasenameNoSuffix ()
   {
     $return = pathinfo($this->GetName(), PATHINFO_FILENAME);
@@ -61,8 +70,12 @@ class Qyy_G_en_Fs_File extends Qyy_G_en_Fs_Node
     return $return;
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.pathinfo.php
+  /**
+   * Return the extension of the file. If it's `null` or empty, an exception
+   * is thrown.
+   * @link http://php.net/manual/en/function.pathinfo.php
+   * @return string the extension of the file.
+   */
   public function GetSuffix ()
   {
     $return = pathinfo($this->GetName(), PATHINFO_EXTENSION);
@@ -75,8 +88,28 @@ class Qyy_G_en_Fs_File extends Qyy_G_en_Fs_Node
     return $return;
   }
 
-  // TODO: doc
-  // http://php.net/manual/en/function.file-get-contents.php
+  /**
+   * Return the read data of the file. In case of failure, an exception is 
+   * thrown.
+   * @link http://php.net/manual/en/function.file-get-contents.php
+   * @param boolean $use_include_path [optional] <p>
+   * The optional use_include_path parameter can be set to '1' or TRUE if you 
+   * want to search for the file in the include_path.
+   * </p>
+   * @param resource $context [optional] <p>
+   * A valid context resource created with 
+   * stream_context_create. If you don't need to use a
+   * custom context, you can skip this parameter by &null;.
+   * </p>
+   * @param int $offset [optional] <p>
+   * The offset where the reading starts.
+   * </p>
+   * @param int $maxlen [optional] <p>
+   * Maximum length of data read. The default is to read until end
+   * of file is reached.
+   * </p>
+   * @return string the read data of the file. 
+   */
   public function GetContents (
     $use_include_path = false,
     $context = null,

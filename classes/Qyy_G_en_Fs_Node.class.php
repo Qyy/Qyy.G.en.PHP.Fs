@@ -42,7 +42,13 @@ class Qyy_G_en_Fs_Node
    */
   protected $name;
   
-  // TODO: doc
+  /**
+   * Create a new `Qyy_G_en_Fs_Node` object. If `$name` does not exists, an
+   * exception is thrown.
+   * @param string $name <p>
+   * Path to the file.
+   * </p>
+   */
   function __construct ($name)
   {
     Qyy_G_en_Fs::ThrowExceptionIfNodeDoesNotExists($name);
@@ -50,28 +56,45 @@ class Qyy_G_en_Fs_Node
     $this->name = $name;
   }
   
-  // TODO: doc
+  /**
+   * Returns the name of the file.
+   * @return string the name of the file. 
+   */
   public function GetName ()
   {
     return $this->name;
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.basename.php
+  /**
+   * Returns filename component of path.
+   * @link http://php.net/manual/en/function.basename.php
+   * @return string the base name of the given path.
+   */
   public function GetBasename ()
   {
     return basename($this->GetName());
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.dirname.php
+  /**
+   * Returns directory name component of path.
+   * @link http://php.net/manual/en/function.dirname.php
+   * @return string the name of the directory. If there are no slashes
+   * in path, a dot ('.') is returned, indicating the current directory. 
+   * Otherwise, the returned string is path with any trailing/component 
+   * removed.
+   */
   public function GetDirname ()
   {
     return dirname($this->GetName());
   }
   
-  // TODO: doc
-  // http://php.net/manual/en/function.realpath.php
+  /**
+   * Returns canonicalized absolute pathname. On failure, an exception is 
+   * thrown.
+   * @link http://php.net/manual/en/function.realpath.php
+   * @return the canonicalized absolute pathname on success. The 
+   * resulting path will have no symbolic link, '/./' or '/../' components.
+   */
   public function GetRealpath ()
   {
     $return = realpath($this->GetName());
