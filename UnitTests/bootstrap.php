@@ -35,4 +35,4 @@
  */
 
 require_once('..'.DIRECTORY_SEPARATOR.'Qyy_G_en_Fs_bootstrap.inc.php');
-require_once('PHPUnit'.DIRECTORY_SEPARATOR.'Autoload.php');
+//require_once('PHPUnit'.DIRECTORY_SEPARATOR.'Autoload.php');
