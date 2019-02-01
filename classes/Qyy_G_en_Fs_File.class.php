@@ -148,7 +148,7 @@ class Qyy_G_en_Fs_File extends Qyy_G_en_Fs_Node
           'message: "'.$lastError['message'].'"'.PHP_EOL
             .'file: "'.$lastError['file'].'"'.PHP_EOL
             .'line: `'.$lastError['line'].'`'.PHP_EOL,
-          $derniereErreur['type']));
+          $lastError['type']));
     }
 
     return $return;
